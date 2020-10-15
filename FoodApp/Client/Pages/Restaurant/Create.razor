@@ -1,0 +1,14 @@
+@page "/restaurant/create"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+<h3>Create</h3>
+<Form ButtonText="Create Restaurant" restaurant="@restaurant"
+            OnValidSubmit="@CreateRestaurant" />
+@code {
+    Restaurant restaurant = new Restaurant();
+    async Task CreateRestaurant()
+    {
+        await http.PostAsJsonAsync("api/restaurant", restaurant);
+        uriHelper.NavigateTo("restaurant");
+    }
+}

@@ -1,0 +1,26 @@
+<EditForm Model="@restaurant" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="form-group">
+        <label>Name :</label>
+        <div>
+            <InputText @bind-Value="@restaurant.Name" />
+            <ValidationMessage For="@(() => restaurant.Name)" />
+        </div>
+    </div>
+        <div class="form-group">
+        <label>City :</label>
+        <div>
+            <InputText @bind-Value="@restaurant.City" />
+            <ValidationMessage For="@(() => restaurant.City)" />
+        </div>
+    </div>
+  
+    <button type="submit" class="btn btn-success">
+        @ButtonText
+    </button>
+</EditForm>
+@code {
+    [Parameter] public Restaurant restaurant { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

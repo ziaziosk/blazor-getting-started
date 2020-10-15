@@ -1,0 +1,60 @@
+@page "/restaurant"
+@inject HttpClient client
+@inject IJSRuntime js
+<h3>Restaurants</h3>
+<small>Best restaurants in town.</small>
+<div class="form-group">
+    <a class="btn btn-success" href="restaurant/create"><i class="oi oi-plus"></i> Create New</a>
+</div>
+<br>
+@if (restaurants == null)
+{
+    <text>Loading...</text>
+}
+else if (restaurants.Length == 0)
+{
+    <text>No Records Found.</text>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>City</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Restaurant r in restaurants)
+            {
+                <tr>
+                    <td>@r.Id</td>
+                    <td>@r.Name</td>
+                    <td>@r.City</td>
+                    <td>
+                        <a class="btn btn-success" href="restaurant/edit/@r.Id">Edit</a>
+                        <button class="btn btn-danger" @onclick="@(() => Delete(r.Id))">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+@code {
+    Restaurant[] restaurants { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        restaurants = await client.GetFromJsonAsync<Restaurant[]>("api/restaurant");
+    }
+    async Task Delete(int restaurantID)
+    {
+        var r = restaurants.First(x => x.Id == restaurantID);
+        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {r.Name}'s ({r.Id}) Record?"))
+        {
+            await client.DeleteAsync($"api/restaurant/{restaurantID}");
+            await OnInitializedAsync();
+        }
+    }
+}

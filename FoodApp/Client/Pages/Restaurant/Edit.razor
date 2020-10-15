@@ -1,0 +1,21 @@
+@page "/restaurant/edit/{restaurantId:int}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+<h3>Edit</h3>
+<Form ButtonText="Update" restaurant="r"
+      OnValidSubmit="@EditRestaurant" />
+@code {
+    [Parameter] public int restaurantId { get; set; }
+    Restaurant r = new Restaurant();
+    protected async override Task OnParametersSetAsync()
+    {
+        r = await http.GetFromJsonAsync<Restaurant>($"api/Restaurant/{restaurantId}");
+    }
+    async Task EditRestaurant()
+    {
+        await http.PutAsJsonAsync("api/restaurant", r);
+        await js.InvokeVoidAsync("alert", $"Updated Successfully!");
+        uriHelper.NavigateTo("restaurant");
+    }
+}
