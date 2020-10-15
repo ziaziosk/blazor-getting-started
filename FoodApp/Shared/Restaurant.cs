@@ -11,5 +11,7 @@ public class Restaurant
     public string City {get;set;}
 
     public int Rating {get;set;}
+
+    public string Image {get;set;}
 }
 }

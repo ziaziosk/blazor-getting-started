@@ -23,6 +23,7 @@ else
                 <th>Id</th>
                 <th>Name</th>
                 <th>City</th>
+                <th>Image</th>
                 <th></th>
             </tr>
         </thead>
@@ -33,6 +34,7 @@ else
                     <td>@r.Id</td>
                     <td>@r.Name</td>
                     <td>@r.City</td>
+                    <td><ImageViewer restaurant=r /></td>
                     <td>
                         <a class="btn btn-success" href="restaurant/edit/@r.Id">Edit</a>
                         <button class="btn btn-danger" @onclick="@(() => Delete(r.Id))">Delete</button>

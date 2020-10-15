@@ -3,15 +3,35 @@
     <div class="form-group">
         <label>Name :</label>
         <div>
-            <InputText @bind-Value="@restaurant.Name" />
+            <InputText  @bind-Value="@restaurant.Name" />
             <ValidationMessage For="@(() => restaurant.Name)" />
         </div>
     </div>
         <div class="form-group">
         <label>City :</label>
         <div>
-            <InputText @bind-Value="@restaurant.City" />
+              <InputSelect id="style" class="form-control" @bind-Value="@restaurant.City">
+                <option value="">City</option>
+                @foreach (string city in Cities)
+                {
+                    <option value="@city">@city</option>
+                }
+            </InputSelect>
             <ValidationMessage For="@(() => restaurant.City)" />
+        </div>
+    </div>
+            <div class="form-group">
+        <label>Rating :</label>
+        <div>
+            <InputNumber @bind-Value="@restaurant.Rating" />
+            <ValidationMessage For="@(() => restaurant.Rating)" />
+        </div>
+    </div>
+  <div class="form-group">
+        <label>Image :</label>
+        <div>
+            <InputText @bind-Value="@restaurant.Image" />
+            <ValidationMessage For="@(() => restaurant.Image)" />
         </div>
     </div>
   
@@ -20,6 +40,7 @@
     </button>
 </EditForm>
 @code {
+    string[] Cities = {"Thessaloniki", "Munchen"};
     [Parameter] public Restaurant restaurant { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }

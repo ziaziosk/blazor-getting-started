@@ -1,0 +1,10 @@
+@if(string.IsNullOrEmpty(restaurant.Image)) {
+    <div>no image</div>
+} else {
+    <img src="@restaurant.Image" width="100" alt="@restaurant.Name" />
+}
+
+@code {
+    [Parameter] public Restaurant restaurant { get; set; }
+
+}
